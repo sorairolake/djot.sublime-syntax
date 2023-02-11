@@ -1,0 +1,19 @@
+= Djot.sublime-syntax
+:project-url: https://github.com/sorairolake/djot.sublime-syntax
+:ci-badge: {project-url}/workflows/CI/badge.svg
+:ci-url: {project-url}/actions?query=workflow%3ACI
+:djot-url: https://djot.net/
+:sublime-text-url: https://www.sublimetext.com/
+
+////
+image:{ci-badge}[CI, link={ci-url}]
+////
+
+{djot-url}[Djot] syntax highlighting for {sublime-text-url}[Sublime Text].
+
+== License
+
+Unless otherwise noted, the code and documentation are distributed under the
+terms of the _CC0 1.0_.
+
+See link:COPYRIGHT[] for more details.
