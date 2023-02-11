@@ -7,17 +7,18 @@
 
 %YAML 1.2
 ---
-# This definition aims to meet CommonMark specifications
-#   http://spec.commonmark.org/
-# with GitHub Formatted Markdown extensions
-#   https://github.github.com/gfm/
-# and has a few extras like Markdown Extra's footnotes
-#   https://michelf.ca/projects/php-markdown/extra/#footnotes
 #
-# The scope suffix should indicate which flavor of Markdown the feature came from,
-# to help make this syntax definition easier to maintain.
-name: Markdown
-scope: text.html.markdown
+# This definition aims to meet Djot syntax reference:
+#
+#   https://github.com/jgm/djot/blob/main/doc/syntax.md
+#
+# Syntax definition of `.sublime-syntax` file:
+#
+#   https://www.sublimetext.com/docs/syntax.html
+#
+name: Djot
+file_extensions: [dj]
+scope: text.html.djot
 version: 2
 hidden: true
 
