@@ -308,44 +308,44 @@ contexts:
   main:
     - include: frontmatter
     - match: ''
-      set: markdown
+      set: djot
 
   frontmatter:
     - match: (---)\s*(?i:(coffee)\s*)\n
       captures:
-        0: meta.frontmatter.markdown
-        1: punctuation.section.block.begin.frontmatter.markdown
-        2: constant.other.language-name.markdown
+        0: meta.frontmatter.djot
+        1: punctuation.section.block.begin.frontmatter.djot
+        2: constant.other.language-name.djot
       embed: scope:source.coffee
-      embed_scope: meta.frontmatter.markdown source.coffee.embedded.markdown
+      embed_scope: meta.frontmatter.djot source.coffee.embedded.djot
       escape: ^(---|\.{3})\s*\n  # pandoc requires the remainder of the line to be blank
       escape_captures:
-        0: meta.frontmatter.markdown
-        1: punctuation.section.block.end.frontmatter.markdown
+        0: meta.frontmatter.djot
+        1: punctuation.section.block.end.frontmatter.djot
     - match: (---)\s*(?i:(json)\s*)\n
       captures:
-        0: meta.frontmatter.markdown
-        1: punctuation.section.block.begin.frontmatter.markdown
-        2: constant.other.language-name.markdown
+        0: meta.frontmatter.djot
+        1: punctuation.section.block.begin.frontmatter.djot
+        2: constant.other.language-name.djot
       embed: scope:source.json
-      embed_scope: meta.frontmatter.markdown source.json.embedded.markdown
+      embed_scope: meta.frontmatter.djot source.json.embedded.djot
       escape: ^(---|\.{3})\s*\n # pandoc requires the remainder of the line to be blank
       escape_captures:
-        0: meta.frontmatter.markdown
-        1: punctuation.section.block.end.frontmatter.markdown
+        0: meta.frontmatter.djot
+        1: punctuation.section.block.end.frontmatter.djot
     - match: (---)\s*(?i:(yaml|yml)\s*)?\n
       captures:
-        0: meta.frontmatter.markdown
-        1: punctuation.section.block.begin.frontmatter.markdown
-        2: constant.other.language-name.markdown
+        0: meta.frontmatter.djot
+        1: punctuation.section.block.begin.frontmatter.djot
+        2: constant.other.language-name.djot
       embed: scope:source.yaml
-      embed_scope: meta.frontmatter.markdown source.yaml.embedded.markdown
+      embed_scope: meta.frontmatter.djot source.yaml.embedded.djot
       escape: ^(---|\.{3})\s*\n  # pandoc requires the remainder of the line to be blank
       escape_captures:
-        0: meta.frontmatter.markdown
-        1: punctuation.section.block.end.frontmatter.markdown
+        0: meta.frontmatter.djot
+        1: punctuation.section.block.end.frontmatter.djot
 
-  markdown:
+  djot:
     - include: indented-code-blocks
     - include: thematic-breaks
     - include: block-quotes
@@ -357,7 +357,7 @@ contexts:
     - include: atx-headings
     - include: setext-headings-or-paragraphs
 
-  indented-markdown:
+  indented-djot:
     # This is a public context which can be embedded by 3rd-party syntaxes
     # to support Markdown highlighting in locations of arbitrary indentation,
     # but without reference to list blocks as this is an implementation detail.
@@ -370,7 +370,7 @@ contexts:
     # https://spec.commonmark.org/0.30/#block-quotes
     - match: '[ \t]{,3}(>)[ ]?'
       captures:
-        1: punctuation.definition.blockquote.markdown
+        1: punctuation.definition.blockquote.djot
       push:
         - block-quote-meta
         - block-quote-body
@@ -378,7 +378,7 @@ contexts:
 
   block-quote-meta:
     - meta_include_prototype: false
-    - meta_scope: markup.quote.markdown
+    - meta_scope: markup.quote.djot
     - include: immediately-pop
 
   block-quote-body:
@@ -405,7 +405,7 @@ contexts:
   block-quote-punctuations:
     - match: ^[ \t]{,3}(>)[ ]?
       captures:
-        1: punctuation.definition.blockquote.markdown
+        1: punctuation.definition.blockquote.djot
       push: block-quote-punctuation-body
 
   block-quote-punctuation-body:
@@ -415,14 +415,14 @@ contexts:
   block-quote-punctuation-content:
     - match: '[ \t]{,3}(>)[ ]?'
       captures:
-        1: punctuation.definition.blockquote.markdown
+        1: punctuation.definition.blockquote.djot
 
   block-quote-nested-punctuations:
     # Quotes signs in list items are not restricted by indentation level
     # for technical reasons.
     - match: ^[ \t]*(>)[ ]?
       captures:
-        1: punctuation.definition.blockquote.markdown
+        1: punctuation.definition.blockquote.djot
       push: block-quote-nested-punctuation-body
 
   block-quote-nested-punctuation-body:
@@ -432,7 +432,7 @@ contexts:
   block-quote-nested-punctuation-content:
     - match: '[ \t]*(>)[ ]?'
       captures:
-        1: punctuation.definition.blockquote.markdown
+        1: punctuation.definition.blockquote.djot
 
 ###[ CONTAINER BLOCKS: BLOCK QUOTES > FENCED CODE BLOCKS ]####################
 
@@ -443,9 +443,9 @@ contexts:
           {{fenced_code_block_language}}?
           .*$\n?       # all characters until EOL
       captures:
-        0: meta.code-fence.definition.begin.text.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.text.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       push: block-quote-fenced-code-block-body
 
   block-quote-fenced-code-block-body:
@@ -455,14 +455,14 @@ contexts:
   block-quote-fenced-code-block-content:
     - include: block-quote-punctuation-content
     - match: .*$\n?
-      scope: markup.raw.code-fence.markdown-gfm
+      scope: markup.raw.code-fence.djot
 
   block-quote-fenced-code-block-end:
     - include: block-quote-end
     - match: '{{fenced_code_block_end}}'
       captures:
-        0: meta.code-fence.definition.end.text.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.text.djot
+        1: punctuation.definition.raw.code-fence.end.djot
       pop: 1
 
 ###[ CONTAINER BLOCKS: BLOCK QUOTES > REFERENCE DEFINITIONS ]#################
@@ -476,14 +476,14 @@ contexts:
     # Mardown Extras Footnotes
     - match: '([ \t]*)(\[)({{footnote_name}})(\])(:)'
       captures:
-        2: punctuation.definition.reference.begin.markdown
-        3: entity.name.reference.link.markdown
-        4: punctuation.definition.reference.end.markdown
-        5: punctuation.separator.key-value.markdown
+        2: punctuation.definition.reference.begin.djot
+        3: entity.name.reference.link.djot
+        4: punctuation.definition.reference.end.djot
+        5: punctuation.separator.key-value.djot
       push: block-quote-footnote-def-body
 
   block-quote-footnote-def-body:
-    - meta_scope: meta.link.reference.def.footnote.markdown-extra
+    - meta_scope: meta.link.reference.def.footnote.djot
     - include: block-quote-footnote-def-end
     - include: block-quote-punctuations
     - include: block-quote-footnote-paragraphs
@@ -523,10 +523,10 @@ contexts:
     # https://spec.commonmark.org/0.30/#link-reference-definition
     - match: '[ \t]*(\[)({{reference_name}})(\])(:)'
       captures:
-        1: punctuation.definition.reference.begin.markdown
-        2: entity.name.reference.link.markdown
-        3: punctuation.definition.reference.end.markdown
-        4: punctuation.separator.key-value.markdown
+        1: punctuation.definition.reference.begin.djot
+        2: entity.name.reference.link.djot
+        3: punctuation.definition.reference.end.djot
+        4: punctuation.separator.key-value.djot
       push:
         - block-quote-link-def-meta
         - block-quote-link-def-title
@@ -534,7 +534,7 @@ contexts:
 
   block-quote-link-def-meta:
     - meta_include_prototype: false
-    - meta_scope: meta.link.reference.def.markdown
+    - meta_scope: meta.link.reference.def.djot
     - include: immediately-pop
 
   block-quote-link-def-title:
@@ -547,13 +547,13 @@ contexts:
     - include: block-quote-nested-paragraph-end
     - include: block-quote-punctuations
     - match: <
-      scope: punctuation.definition.link.begin.markdown
+      scope: punctuation.definition.link.begin.djot
       set: block-quote-link-def-url-angled
     - match: (?=\S)
       set: link-def-url-unquoted
 
   block-quote-link-def-url-angled:
-    - meta_content_scope: markup.underline.link.markdown
+    - meta_content_scope: markup.underline.link.djot
     - include: block-quote-punctuations
     - include: link-url-angled
 
@@ -562,28 +562,28 @@ contexts:
   block-quote-list-block:
     - match: ([ \t]*)([*+-])((?:[ ](\[)([ xX])(\]))?\s)
       captures:
-        1: markup.list.unnumbered.markdown
-        2: markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
-        3: markup.list.unnumbered.markdown
-        4: markup.checkbox.begin.markdown-gfm punctuation.definition.checkbox.begin.markdown-gfm
-        5: markup.checkbox.mark.markdown-gfm
-        6: markup.checkbox.end.markdown-gfm punctuation.definition.checkbox.end.markdown-gfm
+        1: markup.list.unnumbered.djot
+        2: markup.list.unnumbered.bullet.djot punctuation.definition.list_item.djot
+        3: markup.list.unnumbered.djot
+        4: markup.checkbox.begin.djot punctuation.definition.checkbox.begin.djot
+        5: markup.checkbox.mark.djot
+        6: markup.checkbox.end.djot punctuation.definition.checkbox.end.djot
       set: block-quote-unordered-list-block-body
     - match: ([ \t]*)(\d{1,9}([.)]))(\s)
       captures:
-        1: markup.list.numbered.markdown
-        2: markup.list.numbered.bullet.markdown
-        3: punctuation.definition.list_item.markdown
-        4: markup.list.numbered.markdown
+        1: markup.list.numbered.djot
+        2: markup.list.numbered.bullet.djot
+        3: punctuation.definition.list_item.djot
+        4: markup.list.numbered.djot
       set: block-quote-ordered-list-block-body
 
   block-quote-ordered-list-block-body:
-    - meta_content_scope: markup.list.numbered.markdown
+    - meta_content_scope: markup.list.numbered.djot
     - include: block-quote-list-block-end
     - include: block-quote-list-block-content
 
   block-quote-unordered-list-block-body:
-    - meta_content_scope: markup.list.unnumbered.markdown
+    - meta_content_scope: markup.list.unnumbered.djot
     - include: block-quote-list-block-end
     - include: block-quote-list-block-content
 
@@ -610,7 +610,7 @@ contexts:
       push: block-quote-list-paragraph-body
 
   block-quote-list-paragraph-body:
-    - meta_scope: meta.paragraph.list.markdown
+    - meta_scope: meta.paragraph.list.djot
     - include: block-quote-nested-paragraph-end
     - include: block-quote-nested-punctuations
     - include: inlines
@@ -637,7 +637,7 @@ contexts:
       set: block-quote-paragraph-body
 
   block-quote-paragraph-body:
-    - meta_scope: markup.paragraph.markdown
+    - meta_scope: markup.paragraph.djot
     - include: block-quote-paragraph-end
     - include: block-quote-punctuations
     - include: inlines
@@ -662,28 +662,28 @@ contexts:
   list-blocks:
     - match: ([ \t]*)([*+-])((?:[ ](\[)([ xX])(\]))?\s)
       captures:
-        1: markup.list.unnumbered.markdown
-        2: markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
-        3: markup.list.unnumbered.markdown
-        4: markup.checkbox.begin.markdown-gfm punctuation.definition.checkbox.begin.markdown-gfm
-        5: markup.checkbox.mark.markdown-gfm
-        6: markup.checkbox.end.markdown-gfm punctuation.definition.checkbox.end.markdown-gfm
+        1: markup.list.unnumbered.djot
+        2: markup.list.unnumbered.bullet.djot punctuation.definition.list_item.djot
+        3: markup.list.unnumbered.djot
+        4: markup.checkbox.begin.djot punctuation.definition.checkbox.begin.djot
+        5: markup.checkbox.mark.djot
+        6: markup.checkbox.end.djot punctuation.definition.checkbox.end.djot
       push: unordered-list-block
     - match: ([ \t]*)(\d{1,9}([.)]))(\s)
       captures:
-        1: markup.list.numbered.markdown
-        2: markup.list.numbered.bullet.markdown
-        3: punctuation.definition.list_item.markdown
-        4: markup.list.numbered.markdown
+        1: markup.list.numbered.djot
+        2: markup.list.numbered.bullet.djot
+        3: punctuation.definition.list_item.djot
+        4: markup.list.numbered.djot
       push: ordered-list-block
 
   unordered-list-block:
-    - meta_content_scope: markup.list.unnumbered.markdown
+    - meta_content_scope: markup.list.unnumbered.djot
     - include: list-block-end
     - include: list-block-content
 
   ordered-list-block:
-    - meta_content_scope: markup.list.numbered.markdown
+    - meta_content_scope: markup.list.numbered.djot
     - include: list-block-end
     - include: list-block-content
 
@@ -707,23 +707,23 @@ contexts:
   list-items:
     - match: ([ \t]*)([*+-])((?:[ ](\[)([ xX])(\]))?\s)
       captures:
-        1: markup.list.unnumbered.markdown
-        2: markup.list.unnumbered.bullet.markdown punctuation.definition.list_item.markdown
-        3: markup.list.unnumbered.markdown
-        4: markup.checkbox.begin.markdown-gfm punctuation.definition.checkbox.begin.markdown-gfm
-        5: markup.checkbox.mark.markdown-gfm
-        6: markup.checkbox.end.markdown-gfm punctuation.definition.checkbox.end.markdown-gfm
+        1: markup.list.unnumbered.djot
+        2: markup.list.unnumbered.bullet.djot punctuation.definition.list_item.djot
+        3: markup.list.unnumbered.djot
+        4: markup.checkbox.begin.djot punctuation.definition.checkbox.begin.djot
+        5: markup.checkbox.mark.djot
+        6: markup.checkbox.end.djot punctuation.definition.checkbox.end.djot
     - match: ([ \t]*)(\d{1,9}([.)]))(\s)
       captures:
-        1: markup.list.numbered.markdown
-        2: markup.list.numbered.bullet.markdown
-        3: punctuation.definition.list_item.markdown
-        4: markup.list.numbered.markdown
+        1: markup.list.numbered.djot
+        2: markup.list.numbered.bullet.djot
+        3: punctuation.definition.list_item.djot
+        4: markup.list.numbered.djot
 
   list-block-quotes:
     - match: '[ \t]*(>)[ ]?'
       captures:
-        1: punctuation.definition.blockquote.markdown
+        1: punctuation.definition.blockquote.djot
       push:
         - block-quote-meta
         - list-block-quote-body
@@ -742,7 +742,7 @@ contexts:
   list-block-quote-punctuations:
     - match: ^[ \t]*(>)[ ]?
       captures:
-        1: punctuation.definition.blockquote.markdown
+        1: punctuation.definition.blockquote.djot
       push: block-quote-punctuation-body
 
   list-block-quote-paragraph:
@@ -750,7 +750,7 @@ contexts:
       set: list-block-quote-paragraph-body
 
   list-block-quote-paragraph-body:
-    - meta_scope: markup.paragraph.markdown
+    - meta_scope: markup.paragraph.djot
     - include: block-quote-nested-paragraph-end
     - include: list-block-quote-punctuations
     - include: inlines
@@ -769,23 +769,23 @@ contexts:
 
   list-setext-heading1:
     # https://spec.commonmark.org/0.30/#setext-headings
-    - meta_scope: markup.heading.1.markdown
-    - meta_content_scope: entity.name.section.markdown
+    - meta_scope: markup.heading.1.djot
+    - meta_content_scope: entity.name.section.djot
     - match: '{{list_setext_heading1_end}}'
       captures:
-        1: punctuation.definition.heading.setext.markdown
-        2: meta.whitespace.newline.markdown
+        1: punctuation.definition.heading.setext.djot
+        2: meta.whitespace.newline.djot
       pop: 1
     - include: setext-heading-content
 
   list-setext-heading2:
     # https://spec.commonmark.org/0.30/#setext-headings
-    - meta_scope: markup.heading.2.markdown
-    - meta_content_scope: entity.name.section.markdown
+    - meta_scope: markup.heading.2.djot
+    - meta_content_scope: entity.name.section.djot
     - match: '{{list_setext_heading2_end}}'
       captures:
-        1: punctuation.definition.heading.setext.markdown
-        2: meta.whitespace.newline.markdown
+        1: punctuation.definition.heading.setext.djot
+        2: meta.whitespace.newline.djot
       pop: 1
     - match: '{{list_setext_heading1_escape}}'
       fail: list-setext-headings-or-paragraphs
@@ -793,7 +793,7 @@ contexts:
 
   list-paragraph:
     # https://spec.commonmark.org/0.30/#paragraphs
-    - meta_scope: meta.paragraph.list.markdown
+    - meta_scope: meta.paragraph.list.djot
     - include: list-paragraph-fail
     - include: list-paragraph-end
     - include: list-math-blocks
@@ -818,64 +818,64 @@ contexts:
     #   as terminator pattern requires them to match then.
     - match: '[ \t]*(#{1}){{atx_heading_space}}'
       captures:
-        1: punctuation.definition.heading.begin.markdown
+        1: punctuation.definition.heading.begin.djot
       push: atx-heading1-content
     - match: '[ \t]*(#{2}){{atx_heading_space}}'
       captures:
-        1: punctuation.definition.heading.begin.markdown
+        1: punctuation.definition.heading.begin.djot
       push: atx-heading2-content
     - match: '[ \t]*(#{3}){{atx_heading_space}}'
       captures:
-        1: punctuation.definition.heading.begin.markdown
+        1: punctuation.definition.heading.begin.djot
       push: atx-heading3-content
     - match: '[ \t]*(#{4}){{atx_heading_space}}'
       captures:
-        1: punctuation.definition.heading.begin.markdown
+        1: punctuation.definition.heading.begin.djot
       push: atx-heading4-content
     - match: '[ \t]*(#{5}){{atx_heading_space}}'
       captures:
-        1: punctuation.definition.heading.begin.markdown
+        1: punctuation.definition.heading.begin.djot
       push: atx-heading5-content
     - match: '[ \t]*(#{6}){{atx_heading_space}}'
       captures:
-        1: punctuation.definition.heading.begin.markdown
+        1: punctuation.definition.heading.begin.djot
       push: atx-heading6-content
 
   atx-heading1-content:
-    - meta_scope: markup.heading.1.markdown
-    - meta_content_scope: entity.name.section.markdown
+    - meta_scope: markup.heading.1.djot
+    - meta_content_scope: entity.name.section.djot
     - include: atx-heading-content
 
   atx-heading2-content:
-    - meta_scope: markup.heading.2.markdown
-    - meta_content_scope: entity.name.section.markdown
+    - meta_scope: markup.heading.2.djot
+    - meta_content_scope: entity.name.section.djot
     - include: atx-heading-content
 
   atx-heading3-content:
-    - meta_scope: markup.heading.3.markdown
-    - meta_content_scope: entity.name.section.markdown
+    - meta_scope: markup.heading.3.djot
+    - meta_content_scope: entity.name.section.djot
     - include: atx-heading-content
 
   atx-heading4-content:
-    - meta_scope: markup.heading.4.markdown
-    - meta_content_scope: entity.name.section.markdown
+    - meta_scope: markup.heading.4.djot
+    - meta_content_scope: entity.name.section.djot
     - include: atx-heading-content
 
   atx-heading5-content:
-    - meta_scope: markup.heading.5.markdown
-    - meta_content_scope: entity.name.section.markdown
+    - meta_scope: markup.heading.5.djot
+    - meta_content_scope: entity.name.section.djot
     - include: atx-heading-content
 
   atx-heading6-content:
-    - meta_scope: markup.heading.6.markdown
-    - meta_content_scope: entity.name.section.markdown
+    - meta_scope: markup.heading.6.djot
+    - meta_content_scope: entity.name.section.djot
     - include: atx-heading-content
 
   atx-heading-content:
     - match: '{{atx_heading_end}}'
       captures:
-        1: punctuation.definition.heading.end.markdown
-        2: meta.whitespace.newline.markdown
+        1: punctuation.definition.heading.end.djot
+        2: meta.whitespace.newline.djot
       pop: 1
     - include: emphasis
     - include: images
@@ -898,23 +898,23 @@ contexts:
 
   setext-heading1:
     # https://spec.commonmark.org/0.30/#setext-headings
-    - meta_scope: markup.heading.1.markdown
-    - meta_content_scope: entity.name.section.markdown
+    - meta_scope: markup.heading.1.djot
+    - meta_content_scope: entity.name.section.djot
     - match: '{{setext_heading1_end}}'
       captures:
-        1: punctuation.definition.heading.setext.markdown
-        2: meta.whitespace.newline.markdown
+        1: punctuation.definition.heading.setext.djot
+        2: meta.whitespace.newline.djot
       pop: 1
     - include: setext-heading-content
 
   setext-heading2:
     # https://spec.commonmark.org/0.30/#setext-headings
-    - meta_scope: markup.heading.2.markdown
-    - meta_content_scope: entity.name.section.markdown
+    - meta_scope: markup.heading.2.djot
+    - meta_content_scope: entity.name.section.djot
     - match: '{{setext_heading2_end}}'
       captures:
-        1: punctuation.definition.heading.setext.markdown
-        2: meta.whitespace.newline.markdown
+        1: punctuation.definition.heading.setext.djot
+        2: meta.whitespace.newline.djot
       pop: 1
     - match: '{{setext_heading1_escape}}'
       fail: setext-headings-or-paragraphs
@@ -941,7 +941,7 @@ contexts:
 
   paragraph:
     # https://spec.commonmark.org/0.30/#paragraphs
-    - meta_scope: meta.paragraph.markdown
+    - meta_scope: meta.paragraph.djot
     - include: paragraph-fail
     - include: paragraph-end
     - include: math-blocks
@@ -960,7 +960,7 @@ contexts:
   indented-code-blocks:
     # https://spec.commonmark.org/0.30/#indented-code-blocks
     - match: '{{indented_code_block}}.*$\n?'
-      scope: markup.raw.block.markdown
+      scope: markup.raw.block.djot
 
 ###[ LEAF BLOCKS: FENCED CODE BLOCKS ]########################################
 
@@ -1059,17 +1059,17 @@ contexts:
           ((?i:actionscript|as))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.actionscript.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.actionscript.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.actionscript.2
       embed_scope:
-        markup.raw.code-fence.actionscript.markdown-gfm
+        markup.raw.code-fence.actionscript.djot
         source.actionscript.2
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.actionscript.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.actionscript.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-applescript:
     - match: |-
@@ -1078,17 +1078,17 @@ contexts:
           ((?i:applescript|osascript))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.applescript.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.applescript.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.applescript
       embed_scope:
-        markup.raw.code-fence.applescript.markdown-gfm
+        markup.raw.code-fence.applescript.djot
         source.applescript
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.applescript.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.applescript.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-clojure:
     - match: |-
@@ -1097,17 +1097,17 @@ contexts:
           ((?i:clojure|clj))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.clojure.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.clojure.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.clojure
       embed_scope:
-        markup.raw.code-fence.clojure.markdown-gfm
+        markup.raw.code-fence.clojure.djot
         source.clojure
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.clojure.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.clojure.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-c:
     - match: |-
@@ -1116,17 +1116,17 @@ contexts:
           ((?i:c|h))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.c.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.c.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.c
       embed_scope:
-        markup.raw.code-fence.c.markdown-gfm
+        markup.raw.code-fence.c.djot
         source.c
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.c.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.c.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-cpp:
     - match: |-
@@ -1135,17 +1135,17 @@ contexts:
           ((?i:c\+\+|cc|cpp|cxx|h\+\+|hpp|hxx))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.c++.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.c++.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.c++
       embed_scope:
-        markup.raw.code-fence.c++.markdown-gfm
+        markup.raw.code-fence.c++.djot
         source.c++
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.c++.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.c++.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-csharp:
     - match: |-
@@ -1154,17 +1154,17 @@ contexts:
           ((?i:csharp|c\#|cs))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.csharp.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.csharp.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.cs
       embed_scope:
-        markup.raw.code-fence.csharp.markdown-gfm
+        markup.raw.code-fence.csharp.djot
         source.cs
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.csharp.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.csharp.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-css:
     - match: |-
@@ -1173,17 +1173,17 @@ contexts:
           ((?i:css))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.css.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.css.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.css
       embed_scope:
-        markup.raw.code-fence.css.markdown-gfm
+        markup.raw.code-fence.css.djot
         source.css
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.css.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.css.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-diff:
     - match: |-
@@ -1192,17 +1192,17 @@ contexts:
           ((?i:diff|patch))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.diff.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.diff.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.diff
       embed_scope:
-        markup.raw.code-fence.diff.markdown-gfm
+        markup.raw.code-fence.diff.djot
         source.diff
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.diff.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.diff.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-dosbatch:
     - match: |-
@@ -1211,17 +1211,17 @@ contexts:
           ((?i:bat|cmd|dos))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.dosbatch.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.dosbatch.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.dosbatch
       embed_scope:
-        markup.raw.code-fence.dosbatch.markdown-gfm
+        markup.raw.code-fence.dosbatch.djot
         source.dosbatch
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.dosbatch.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.dosbatch.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-erlang:
     - match: |-
@@ -1230,17 +1230,17 @@ contexts:
           ((?i:erlang|escript))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.erlang.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.erlang.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.erlang
       embed_scope:
-        markup.raw.code-fence.erlang.markdown-gfm
+        markup.raw.code-fence.erlang.djot
         source.erlang
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.erlang.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.erlang.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-graphviz:
     - match: |-
@@ -1249,17 +1249,17 @@ contexts:
           ((?i:graphviz))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.graphviz.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.graphviz.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.dot
       embed_scope:
-        markup.raw.code-fence.graphviz.markdown-gfm
+        markup.raw.code-fence.graphviz.djot
         source.dot
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.graphviz.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.graphviz.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-golang:
     - match: |-
@@ -1268,17 +1268,17 @@ contexts:
           ((?i:go(?:lang)?))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.go.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.go.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.go
       embed_scope:
-        markup.raw.code-fence.go.markdown-gfm
+        markup.raw.code-fence.go.djot
         source.go
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.go.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.go.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-haskell:
     - match: |-
@@ -1287,17 +1287,17 @@ contexts:
           ((?i:haskell))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.haskell.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.haskell.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.haskell
       embed_scope:
-        markup.raw.code-fence.haskell.markdown-gfm
+        markup.raw.code-fence.haskell.djot
         source.haskell
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.haskell.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.haskell.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-html-php:
     - match: |-
@@ -1306,17 +1306,17 @@ contexts:
           ((?i:html\+php))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.html-php.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.html-php.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:embedding.php
       embed_scope:
-        markup.raw.code-fence.html-php.markdown-gfm
+        markup.raw.code-fence.html-php.djot
         embedding.php
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.html-php.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.html-php.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-html:
     - match: |-
@@ -1325,17 +1325,17 @@ contexts:
           ((?i:html))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.html.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.html.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:text.html.basic
       embed_scope:
-        markup.raw.code-fence.html.markdown-gfm
+        markup.raw.code-fence.html.djot
         text.html.basic
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.html.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.html.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-java:
     - match: |-
@@ -1344,17 +1344,17 @@ contexts:
           ((?i:java))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.java.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.java.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.java
       embed_scope:
-        markup.raw.code-fence.java.markdown-gfm
+        markup.raw.code-fence.java.djot
         source.java
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.java.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.java.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-javascript:
     - match: |-
@@ -1363,17 +1363,17 @@ contexts:
           ((?i:javascript|js))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.javascript.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.javascript.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.js
       embed_scope:
-        markup.raw.code-fence.javascript.markdown-gfm
+        markup.raw.code-fence.javascript.djot
         source.js
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.javascript.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.javascript.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-jsonc:
     - match: |-
@@ -1382,17 +1382,17 @@ contexts:
           ((?i:jsonc?))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.json.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.json.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.json
       embed_scope:
-        markup.raw.code-fence.json.markdown-gfm
+        markup.raw.code-fence.json.djot
         source.json
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.json.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.json.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-jspx:
     - match: |-
@@ -1401,17 +1401,17 @@ contexts:
           ((?i:jspx?))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.jsp.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.jsp.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:text.html.jsp
       embed_scope:
-        markup.raw.code-fence.jsp.markdown-gfm
+        markup.raw.code-fence.jsp.djot
         text.html.jsp
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.jsp.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.jsp.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-jsx:
     - match: |-
@@ -1420,17 +1420,17 @@ contexts:
           ((?i:jsx))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.jsx.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.jsx.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.jsx
       embed_scope:
-        markup.raw.code-fence.jsx.markdown-gfm
+        markup.raw.code-fence.jsx.djot
         source.jsx
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.jsx.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.jsx.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-lisp:
     - match: |-
@@ -1439,17 +1439,17 @@ contexts:
           ((?i:lisp))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.lisp.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.lisp.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.lisp
       embed_scope:
-        markup.raw.code-fence.lisp.markdown-gfm
+        markup.raw.code-fence.lisp.djot
         source.lisp
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.lisp.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.lisp.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-lua:
     - match: |-
@@ -1458,17 +1458,17 @@ contexts:
           ((?i:lua))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.lua.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.lua.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.lua
       embed_scope:
-        markup.raw.code-fence.lua.markdown-gfm
+        markup.raw.code-fence.lua.djot
         source.lua
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.lua.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.lua.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-makefile:
     - match: |-
@@ -1477,17 +1477,17 @@ contexts:
           ((?i:makefile))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.makefile
       embed_scope:
-        markup.raw.code-fence.makefile.markdown-gfm
+        markup.raw.code-fence.makefile.djot
         source.makefile
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-matlab:
     - match: |-
@@ -1496,17 +1496,17 @@ contexts:
           ((?i:matlab))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.matlab.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.matlab.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.matlab
       embed_scope:
-        markup.raw.code-fence.matlab.markdown-gfm
+        markup.raw.code-fence.matlab.djot
         source.matlab
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.matlab.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.matlab.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-objc:
     - match: |-
@@ -1515,17 +1515,17 @@ contexts:
           ((?i:objc|obj-c|objectivec|objective-c))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.objc.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.objc.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.objc
       embed_scope:
-        markup.raw.code-fence.objc.markdown-gfm
+        markup.raw.code-fence.objc.djot
         source.objc
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.objc.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.objc.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-objcpp:
     - match: |-
@@ -1534,17 +1534,17 @@ contexts:
           ((?i:objc\+\+|obj-c\+\+|objectivec\+\+|objective-c\+\+))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.objc++.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.objc++.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.objc++
       embed_scope:
-        markup.raw.code-fence.objc++.markdown-gfm
+        markup.raw.code-fence.objc++.djot
         source.objc++
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.objc++.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.objc++.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-ocaml:
     - match: |-
@@ -1553,17 +1553,17 @@ contexts:
           ((?i:ocaml))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.ocaml.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.ocaml.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.ocaml
       embed_scope:
-        markup.raw.code-fence.ocaml.markdown-gfm
+        markup.raw.code-fence.ocaml.djot
         source.ocaml
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.ocaml.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.ocaml.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-perl:
     - match: |-
@@ -1572,17 +1572,17 @@ contexts:
           ((?i:perl))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.perl.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.perl.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.perl
       embed_scope:
-        markup.raw.code-fence.perl.markdown-gfm
+        markup.raw.code-fence.perl.djot
         source.perl
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.perl.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.perl.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-php:
     - match: |-
@@ -1591,17 +1591,17 @@ contexts:
           ((?i:php|inc))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.php.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.php.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.php
       embed_scope:
-        markup.raw.code-fence.php.markdown-gfm
+        markup.raw.code-fence.php.djot
         source.php
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.php.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.php.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-python:
     - match: |-
@@ -1610,17 +1610,17 @@ contexts:
           ((?i:python|py))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.python.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.python.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.python
       embed_scope:
-        markup.raw.code-fence.python.markdown-gfm
+        markup.raw.code-fence.python.djot
         source.python
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.python.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.python.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-regexp:
     - match: |-
@@ -1629,17 +1629,17 @@ contexts:
           ((?i:regexp?))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.regexp.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.regexp.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.regexp
       embed_scope:
-        markup.raw.code-fence.regexp.markdown-gfm
+        markup.raw.code-fence.regexp.djot
         source.regexp
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.regexp.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.regexp.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-rscript:
     - match: |-
@@ -1648,17 +1648,17 @@ contexts:
           ((?i:rscript|r|splus))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.r.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.r.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.r
       embed_scope:
-        markup.raw.code-fence.r.markdown-gfm
+        markup.raw.code-fence.r.djot
         source.r
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.r.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.r.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-ruby:
     - match: |-
@@ -1667,17 +1667,17 @@ contexts:
           ((?i:ruby|rb|rbx))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.ruby.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.ruby.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.ruby
       embed_scope:
-        markup.raw.code-fence.ruby.markdown-gfm
+        markup.raw.code-fence.ruby.djot
         source.ruby
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.ruby.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.ruby.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-rust:
     - match: |-
@@ -1686,17 +1686,17 @@ contexts:
           ((?i:rust|rs))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.rust.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.rust.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.rust
       embed_scope:
-        markup.raw.code-fence.rust.markdown-gfm
+        markup.raw.code-fence.rust.djot
         source.rust
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.rust.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.rust.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-scala:
     - match: |-
@@ -1705,17 +1705,17 @@ contexts:
           ((?i:scala))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.scala.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.scala.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.scala
       embed_scope:
-        markup.raw.code-fence.scala.markdown-gfm
+        markup.raw.code-fence.scala.djot
         source.scala
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.scala.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.scala.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-shell:
     - match: |-
@@ -1724,17 +1724,17 @@ contexts:
           ((?i:console|shell))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.shell.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
-      embed: scope:source.shell.interactive.markdown
+        0: meta.code-fence.definition.begin.shell.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
+      embed: scope:source.shell.interactive.djot
       embed_scope:
-        markup.raw.code-fence.shell.markdown-gfm
-        source.shell.interactive.markdown
+        markup.raw.code-fence.shell.djot
+        source.shell.interactive.djot
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.shell.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.shell.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-shell-script:
     - match: |-
@@ -1743,17 +1743,17 @@ contexts:
           ((?i:shell-script|sh|bash|zsh))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.shell-script.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.shell-script.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.shell.bash
       embed_scope:
-        markup.raw.code-fence.shell-script.markdown-gfm
+        markup.raw.code-fence.shell-script.djot
         source.shell.bash
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.shell-script.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.shell-script.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-sql:
     - match: |-
@@ -1762,17 +1762,17 @@ contexts:
           ((?i:sql))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.sql.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.sql.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.sql
       embed_scope:
-        markup.raw.code-fence.sql.markdown-gfm
+        markup.raw.code-fence.sql.djot
         source.sql
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.sql.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.sql.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-tsx:
     - match: |-
@@ -1781,17 +1781,17 @@ contexts:
           ((?i:tsx))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.tsx.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.tsx.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.tsx
       embed_scope:
-        markup.raw.code-fence.tsx.markdown-gfm
+        markup.raw.code-fence.tsx.djot
         source.tsx
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.tsx.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.tsx.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-typescript:
     - match: |-
@@ -1800,17 +1800,17 @@ contexts:
           ((?i:typescript|ts))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.typescript.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.typescript.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.ts
       embed_scope:
-        markup.raw.code-fence.typescript.markdown-gfm
+        markup.raw.code-fence.typescript.djot
         source.ts
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.typescript.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.typescript.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-xml:
     - match: |-
@@ -1819,17 +1819,17 @@ contexts:
           ((?i:atom|plist|svg|xjb|xml|xsd|xsl))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.xml.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.xml.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:text.xml
       embed_scope:
-        markup.raw.code-fence.xml.markdown-gfm
+        markup.raw.code-fence.xml.djot
         text.xml
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.xml.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.xml.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-yaml:
     - match: |-
@@ -1838,17 +1838,17 @@ contexts:
           ((?i:yaml|yml))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.yaml.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.yaml.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.yaml
       embed_scope:
-        markup.raw.code-fence.yaml.markdown-gfm
+        markup.raw.code-fence.yaml.djot
         source.yaml
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.yaml.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.yaml.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-raw:
     - match: |-
@@ -1857,17 +1857,17 @@ contexts:
           {{fenced_code_block_language}}?
           .*$\n?       # all characters until EOL
       captures:
-        0: meta.code-fence.definition.begin.text.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.text.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       push: fenced-raw-content
 
   fenced-raw-content:
-    - meta_content_scope: markup.raw.code-fence.markdown-gfm
+    - meta_content_scope: markup.raw.code-fence.djot
     - match: '{{fenced_code_block_escape}}'
       captures:
-        0: meta.code-fence.definition.end.text.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.text.djot
+        1: punctuation.definition.raw.code-fence.end.djot
       pop: 1
 
   fenced-ada:
@@ -1877,17 +1877,17 @@ contexts:
           ((?i:ada))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.ada.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.ada.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.ada
       embed_scope:
-        markup.raw.code-fence.ada.markdown-gfm
+        markup.raw.code-fence.ada.djot
         source.ada
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.ada.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.ada.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-akh:
     - match: |-
@@ -1896,17 +1896,17 @@ contexts:
           ((?i:akh))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.akh.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.akh.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.akh
       embed_scope:
-        markup.raw.code-fence.akh.markdown-gfm
+        markup.raw.code-fence.akh.djot
         source.akh
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.akh.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.akh.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-arduino:
     - match: |-
@@ -1915,17 +1915,17 @@ contexts:
           ((?i:arduino|ino))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.arduino.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.arduino.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.arduino
       embed_scope:
-        markup.raw.code-fence.arduino.markdown-gfm
+        markup.raw.code-fence.arduino.djot
         source.arduino
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.arduino.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.arduino.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-coffee:
     - match: |-
@@ -1934,17 +1934,17 @@ contexts:
           ((?i:coffee(?:script)?|cjsx|cson|iced))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.coffee.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.coffee.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.coffee
       embed_scope:
-        markup.raw.code-fence.coffee.markdown-gfm
+        markup.raw.code-fence.coffee.djot
         source.coffee
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.coffee.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.coffee.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-dart:
     - match: |-
@@ -1953,17 +1953,17 @@ contexts:
           ((?i:dart))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.dart.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.dart.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.dart
       embed_scope:
-        markup.raw.code-fence.dart.markdown-gfm
+        markup.raw.code-fence.dart.djot
         source.dart
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.dart.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.dart.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-docker:
     - match: |-
@@ -1972,17 +1972,17 @@ contexts:
           ((?i:docker(?:file)?))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.docker.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.docker.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.shell.docker
       embed_scope:
-        markup.raw.code-fence.docker.markdown-gfm
+        markup.raw.code-fence.docker.djot
         source.shell.docker
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.docker.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.docker.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-elixir:
     - match: |-
@@ -1991,17 +1991,17 @@ contexts:
           ((?i:elixir))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.elixir.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.elixir.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.elixir
       embed_scope:
-        markup.raw.code-fence.elixir.markdown-gfm
+        markup.raw.code-fence.elixir.djot
         source.elixir
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.elixir.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.elixir.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-fish:
     - match: |-
@@ -2010,17 +2010,17 @@ contexts:
           ((?i:fish))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.fish.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.fish.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.shell.fish
       embed_scope:
-        markup.raw.code-fence.fish.markdown-gfm
+        markup.raw.code-fence.fish.djot
         source.shell.fish
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.fish.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.fish.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-graphql:
     - match: |-
@@ -2029,17 +2029,17 @@ contexts:
           ((?i:graphql))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.graphql.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.graphql.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.graphql
       embed_scope:
-        markup.raw.code-fence.graphql.markdown-gfm
+        markup.raw.code-fence.graphql.djot
         source.graphql
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.graphql.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.graphql.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-http:
     - match: |-
@@ -2048,17 +2048,17 @@ contexts:
           ((?i:http))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.http.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.http.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:text.http-request-response
       embed_scope:
-        markup.raw.code-fence.http.markdown-gfm
+        markup.raw.code-fence.http.djot
         text.http-request-response
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.http.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.http.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-ini:
     - match: |-
@@ -2067,17 +2067,17 @@ contexts:
           ((?i:ini))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.ini.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.ini.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.ini
       embed_scope:
-        markup.raw.code-fence.ini.markdown-gfm
+        markup.raw.code-fence.ini.djot
         source.ini
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.ini.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.ini.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-jade:
     - match: |-
@@ -2086,17 +2086,17 @@ contexts:
           ((?i:jade))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.jade.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.jade.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.jade
       embed_scope:
-        markup.raw.code-fence.jade.markdown-gfm
+        markup.raw.code-fence.jade.djot
         source.jade
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.jade.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.jade.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-julia:
     - match: |-
@@ -2105,17 +2105,17 @@ contexts:
           ((?i:julia))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.julia.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.julia.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.julia
       embed_scope:
-        markup.raw.code-fence.julia.markdown-gfm
+        markup.raw.code-fence.julia.djot
         source.julia
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.julia.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.julia.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-kotlin:
     - match: |-
@@ -2124,17 +2124,17 @@ contexts:
           ((?i:kotlin))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.kotlin.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.kotlin.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.kotlin
       embed_scope:
-        markup.raw.code-fence.kotlin.markdown-gfm
+        markup.raw.code-fence.kotlin.djot
         source.kotlin
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.kotlin.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.kotlin.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-less:
     - match: |-
@@ -2143,17 +2143,17 @@ contexts:
           ((?i:less))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.less.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.less.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.less
       embed_scope:
-        markup.raw.code-fence.less.markdown-gfm
+        markup.raw.code-fence.less.djot
         source.less
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.less.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.less.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-mermaid:
     - match: |-
@@ -2162,19 +2162,19 @@ contexts:
           ((?i:mermaid))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.mermaid.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.mermaid.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.mermaid
 
       embed_scope:
         source.mermaid
-        markup.raw.code-fence.mermaid.markdown-gfm
-        source.mermaid.embedded.markdown-gfm
+        markup.raw.code-fence.mermaid.djot
+        source.mermaid.embedded.djot
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.mermaid.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.mermaid.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-nim:
     - match: |-
@@ -2183,17 +2183,17 @@ contexts:
           ((?i:nim))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.nim.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.nim.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.nim
       embed_scope:
-        markup.raw.code-fence.nim.markdown-gfm
+        markup.raw.code-fence.nim.djot
         source.nim
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.nim.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.nim.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-powershell:
     - match: |-
@@ -2202,17 +2202,17 @@ contexts:
           ((?i:pwsh|powershell))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.powershell.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.powershell.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.powershell
       embed_scope:
-        markup.raw.code-fence.powershell.markdown-gfm
+        markup.raw.code-fence.powershell.djot
         source.powershell
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.powershell.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.powershell.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-protobuf:
     - match: |-
@@ -2221,17 +2221,17 @@ contexts:
           ((?i:protobuf))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.protobuf.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.protobuf.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.proto
       embed_scope:
-        markup.raw.code-fence.protobuf.markdown-gfm
+        markup.raw.code-fence.protobuf.djot
         source.proto
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.protobuf.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.protobuf.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-reason:
     - match: |-
@@ -2240,17 +2240,17 @@ contexts:
           ((?i:re|reason))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.reason.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.reason.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.reason
       embed_scope:
-        markup.raw.code-fence.reason.markdown-gfm
+        markup.raw.code-fence.reason.djot
         source.reason
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.reason.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.reason.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-sass:
     - match: |-
@@ -2259,17 +2259,17 @@ contexts:
           ((?i:sass))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.sass.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.sass.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.sass
       embed_scope:
-        markup.raw.code-fence.sass.markdown-gfm
+        markup.raw.code-fence.sass.djot
         source.sass
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.sass.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.sass.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-scheme:
     - match: |-
@@ -2278,17 +2278,17 @@ contexts:
           ((?i:scheme))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.scheme.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.scheme.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.scheme
       embed_scope:
-        markup.raw.code-fence.scheme.markdown-gfm
+        markup.raw.code-fence.scheme.djot
         source.scheme
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.scheme.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.scheme.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-scss:
     - match: |-
@@ -2297,17 +2297,17 @@ contexts:
           ((?i:scss))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.scss.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.scss.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.scss
       embed_scope:
-        markup.raw.code-fence.scss.markdown-gfm
+        markup.raw.code-fence.scss.djot
         source.scss
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.scss.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.scss.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-stata:
     - match: |-
@@ -2316,17 +2316,17 @@ contexts:
           ((?i:s|stata|\{s\}|\{s[\s,].*\}|\{stata\}|\{stata[\s,].*\}))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.stata.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.stata.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.stata
       embed_scope:
-        markup.raw.code-fence.stata.markdown-gfm
+        markup.raw.code-fence.stata.djot
         source.stata
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.stata.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.stata.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-svelte:
     - match: |-
@@ -2335,17 +2335,17 @@ contexts:
           ((?i:svelte))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.svelte.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.svelte.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:text.html.svelte
       embed_scope:
-        markup.raw.code-fence.svelte.markdown-gfm
+        markup.raw.code-fence.svelte.djot
         text.html.svelte
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.svelte.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.svelte.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-swift:
     - match: |-
@@ -2354,17 +2354,17 @@ contexts:
           ((?i:swift))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.swift.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.swift.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.swift
       embed_scope:
-        markup.raw.code-fence.swift.markdown-gfm
+        markup.raw.code-fence.swift.djot
         source.swift
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.swift.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.swift.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-terraform:
     - match: |-
@@ -2373,17 +2373,17 @@ contexts:
           ((?i:terraform|tf|hcl))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.terraform.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.terraform.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.json.terraform
       embed_scope:
-        markup.raw.code-fence.terraform.markdown-gfm
+        markup.raw.code-fence.terraform.djot
         source.json.terraform
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.terraform.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.terraform.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-toml:
     - match: |-
@@ -2392,17 +2392,17 @@ contexts:
           ((?i:toml))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.toml.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.toml.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.toml
       embed_scope:
-        markup.raw.code-fence.toml.markdown-gfm
+        markup.raw.code-fence.toml.djot
         source.toml
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.toml.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.toml.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-twee:
     - match: |-
@@ -2411,17 +2411,17 @@ contexts:
           ((?i:twee))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.twee.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.twee.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:text.twee
       embed_scope:
-        markup.raw.code-fence.twee.markdown-gfm
-        text.twee.embedded.markdown
+        markup.raw.code-fence.twee.djot
+        text.twee.embedded.djot
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.twee.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.twee.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-twig:
     - match: |-
@@ -2430,17 +2430,17 @@ contexts:
           ((?i:twig|craftcms))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.twig.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.twig.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:text.html.twig
       embed_scope:
-        markup.raw.code-fence.twig.markdown-gfm
+        markup.raw.code-fence.twig.djot
         text.html.twig
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.twig.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.twig.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-verilog:
     - match: |-
@@ -2449,17 +2449,17 @@ contexts:
           ((?i:verilog|v))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.verilog.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.verilog.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.verilog
       embed_scope:
-        markup.raw.code-fence.verilog.markdown-gfm
+        markup.raw.code-fence.verilog.djot
         source.verilog
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.verilog.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.verilog.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
   fenced-xonsh:
     - match: |-
@@ -2468,17 +2468,17 @@ contexts:
           ((?i:xonsh|xsh))
           {{fenced_code_block_trailing_infostring_characters}}
       captures:
-        0: meta.code-fence.definition.begin.xonsh.markdown-gfm
-        2: punctuation.definition.raw.code-fence.begin.markdown
-        5: constant.other.language-name.markdown
+        0: meta.code-fence.definition.begin.xonsh.djot
+        2: punctuation.definition.raw.code-fence.begin.djot
+        5: constant.other.language-name.djot
       embed: scope:source.xonsh
       embed_scope:
-        markup.raw.code-fence.xonsh.markdown-gfm
+        markup.raw.code-fence.xonsh.djot
         source.xonsh
       escape: '{{fenced_code_block_escape}}'
       escape_captures:
-        0: meta.code-fence.definition.end.xonsh.markdown-gfm
-        1: punctuation.definition.raw.code-fence.end.markdown
+        0: meta.code-fence.definition.end.xonsh.djot
+        1: punctuation.definition.raw.code-fence.end.djot
 
 ###[ LEAF BLOCKS: HTML BLOCKS ]###############################################
 
@@ -2559,13 +2559,13 @@ contexts:
     - include: html-content
 
   html-block-type-6:
-    - meta_scope: meta.disable-markdown
+    - meta_scope: meta.disable-djot
     - match: ^\s*\n
       pop: 1
     - include: html-content
 
   html-block-pop-at-eol:
-    - meta_scope: meta.disable-markdown
+    - meta_scope: meta.disable-djot
     - match: $\n?
       pop: 1
     - include: html-content
@@ -2582,12 +2582,12 @@ contexts:
     # Note: Doesn't (intent to) support bold/italic/striked content.
     - match: ((<)(kbd)(>))([^<]+)((</)(kbd)(>))
       captures:
-        1: markup.kbd.markdown meta.tag.inline.any.html
+        1: markup.kbd.djot meta.tag.inline.any.html
         2: punctuation.definition.tag.begin.html
         3: entity.name.tag.inline.any.html
         4: punctuation.definition.tag.end.html
-        5: markup.kbd.content.markdown
-        6: markup.kbd.markdown meta.tag.inline.any.html
+        5: markup.kbd.content.djot
+        6: markup.kbd.djot meta.tag.inline.any.html
         7: punctuation.definition.tag.begin.html
         8: entity.name.tag.inline.any.html
         9: punctuation.definition.tag.end.html
@@ -2603,14 +2603,14 @@ contexts:
     # Mardown Extras Footnotes
     - match: '([ \t]*)(\[)({{footnote_name}})(\])(:)'
       captures:
-        2: punctuation.definition.reference.begin.markdown
-        3: entity.name.reference.link.markdown
-        4: punctuation.definition.reference.end.markdown
-        5: punctuation.separator.key-value.markdown
+        2: punctuation.definition.reference.begin.djot
+        3: entity.name.reference.link.djot
+        4: punctuation.definition.reference.end.djot
+        5: punctuation.separator.key-value.djot
       push: footnote-def-body
 
   footnote-def-body:
-    - meta_scope: meta.link.reference.def.footnote.markdown-extra
+    - meta_scope: meta.link.reference.def.footnote.djot
     - include: footnote-def-end
     - include: footnote-paragraphs
 
@@ -2652,10 +2652,10 @@ contexts:
     # https://spec.commonmark.org/0.30/#link-reference-definition
     - match: '[ \t]*(\[)({{reference_name}})(\])(:)'
       captures:
-        1: punctuation.definition.reference.begin.markdown
-        2: entity.name.reference.link.markdown
-        3: punctuation.definition.reference.end.markdown
-        4: punctuation.separator.key-value.markdown
+        1: punctuation.definition.reference.begin.djot
+        2: entity.name.reference.link.djot
+        3: punctuation.definition.reference.end.djot
+        4: punctuation.separator.key-value.djot
       push:
         - link-def-meta
         - link-def-attr
@@ -2664,18 +2664,18 @@ contexts:
 
   link-def-meta:
     - meta_include_prototype: false
-    - meta_scope: meta.link.reference.def.markdown
+    - meta_scope: meta.link.reference.def.djot
     - include: immediately-pop
 
   link-def-attr:
     - match: \{
-      scope: punctuation.definition.attributes.begin.markdown
+      scope: punctuation.definition.attributes.begin.djot
       set: link-def-attr-body
     - match: ^(?!\s*{)|(?=\S)
       pop: true
 
   link-def-attr-body:
-    - meta_scope: meta.attributes.markdown
+    - meta_scope: meta.attributes.djot
     - include: tag-attributes
 
   link-def-title:
@@ -2688,7 +2688,7 @@ contexts:
     - match: (?=\{)
       pop: true
     - match: \S.+
-      scope: invalid.illegal.expected-eol.markdown
+      scope: invalid.illegal.expected-eol.djot
 
   expect-attr-or-eol:
     - match: (?=\{)
@@ -2697,18 +2697,18 @@ contexts:
 
   link-def-url:
     - match: <
-      scope: punctuation.definition.link.begin.markdown
+      scope: punctuation.definition.link.begin.djot
       set: link-def-url-angled
     - match: (?=\S)
       set: link-def-url-unquoted
     - include: paragraph-end
 
   link-def-url-angled:
-    - meta_content_scope: markup.underline.link.markdown
+    - meta_content_scope: markup.underline.link.djot
     - include: link-url-angled
 
   link-def-url-unquoted:
-    - meta_scope: markup.underline.link.markdown
+    - meta_scope: markup.underline.link.djot
     # URLs are terminated by whitespace or newline in reference definitions
     # Note: \s includes \n
     - match: (?=\s)
@@ -2722,7 +2722,7 @@ contexts:
       push: table-header
 
   table-header:
-    - meta_scope: meta.table.header.markdown-gfm
+    - meta_scope: meta.table.header.djot
     - match: \n
       set: table-header-separator-begin
     - include: table-cell-content
@@ -2734,17 +2734,17 @@ contexts:
       pop: 1
 
   table-header-separator:
-    - meta_scope: meta.table.header-separator.markdown-gfm
+    - meta_scope: meta.table.header-separator.djot
     - match: \n
       set: table-body
     - match: -+
-      scope: punctuation.section.table-header.markdown
+      scope: punctuation.section.table-header.djot
     - match: ':'
-      scope: punctuation.definition.table-cell-alignment.markdown
+      scope: punctuation.definition.table-cell-alignment.djot
     - include: table-cell-separators
 
   table-body:
-    - meta_content_scope: meta.table.markdown-gfm
+    - meta_content_scope: meta.table.djot
     - include: table-end
     - include: table-cell-content
 
@@ -2765,7 +2765,7 @@ contexts:
     - match: (?={{balanced_emphasis}})
       push: table-cell-emphasis
     - match: (?!{{backticks}})`+
-      scope: invalid.deprecated.unescaped-backticks.markdown
+      scope: invalid.deprecated.unescaped-backticks.djot
     - include: table-cell-separators
     - include: images
     - include: literals
@@ -2778,7 +2778,7 @@ contexts:
 
   table-cell-separators:
     - match: \|
-      scope: punctuation.separator.table-cell.markdown
+      scope: punctuation.separator.table-cell.djot
 
 ###[ LEAF BLOCKS: THEMATIC BREAKS ]###########################################
 
@@ -2789,9 +2789,9 @@ contexts:
 
   thematic-break-body:
     - meta_include_prototype: false
-    - meta_scope: meta.separator.thematic-break.markdown
+    - meta_scope: meta.separator.thematic-break.djot
     - match: '[-_*]+'
-      scope: punctuation.definition.thematic-break.markdown
+      scope: punctuation.definition.thematic-break.djot
     - match: \n
       pop: 1
 
@@ -2851,13 +2851,13 @@ contexts:
 
   code-span:
     - match: (`+)
-      scope: punctuation.definition.raw.begin.markdown
+      scope: punctuation.definition.raw.begin.djot
       set: code-span-body
 
   code-span-body:
-    - meta_scope: markup.raw.inline.markdown
+    - meta_scope: markup.raw.inline.djot
     - match: \1(?!`)
-      scope: punctuation.definition.raw.end.markdown
+      scope: punctuation.definition.raw.end.djot
       pop: 1
     - match: \`+
     - match: '{{list_paragraph_end}}'
@@ -2873,25 +2873,25 @@ contexts:
     # https://spec.commonmark.org/0.30/#emphasis-and-strong-emphasis
     - match: '{{bold_italic_asterisk_begin}}'
       captures:
-        1: punctuation.definition.bold.begin.markdown
-        2: markup.italic.markdown punctuation.definition.italic.begin.markdown
-        3: punctuation.definition.bold.begin.markdown
-        4: markup.italic.markdown punctuation.definition.italic.begin.markdown
+        1: punctuation.definition.bold.begin.djot
+        2: markup.italic.djot punctuation.definition.italic.begin.djot
+        3: punctuation.definition.bold.begin.djot
+        4: markup.italic.djot punctuation.definition.italic.begin.djot
       push: bold-italic-asterisk
     - match: '{{bold_asterisk_begin}}'
-      scope: punctuation.definition.bold.begin.markdown
+      scope: punctuation.definition.bold.begin.djot
       push: bold-asterisk
     - match: \b(__)(_)(?=\S)(?!_)
       captures:
-        1: punctuation.definition.bold.begin.markdown
-        2: markup.italic.markdown punctuation.definition.italic.begin.markdown
+        1: punctuation.definition.bold.begin.djot
+        2: markup.italic.djot punctuation.definition.italic.begin.djot
       push: bold-italic-underscore
     - match: \b__(?=\S)(?!_[_\s])
-      scope: punctuation.definition.bold.begin.markdown
+      scope: punctuation.definition.bold.begin.djot
       push: bold-underscore
 
   bold-asterisk:
-    - meta_scope: markup.bold.markdown
+    - meta_scope: markup.bold.djot
     - match: |-
         (?x)
           [ \t]*\*{4,}    # if there are more than 3 its not applicable to be bold or italic
@@ -2899,7 +2899,7 @@ contexts:
         | ^\*\*           # emphasis can't be closed at the start of the line
     - match: (?:_)?(\*\*)
       captures:
-        1: punctuation.definition.bold.end.markdown
+        1: punctuation.definition.bold.end.djot
       pop: 1
     # Consume the underscore that has no corresponding underscore before the closing bold
     # punctuation on the same line, as it won't be treated as italic by CommonMark
@@ -2907,7 +2907,7 @@ contexts:
     - include: bold-common
 
   bold-underscore:
-    - meta_scope: markup.bold.markdown
+    - meta_scope: markup.bold.djot
     - match: |-
         (?x)
           [ \t]*_{4,}     # if there are more than 3 its not applicable to be bold or italic
@@ -2915,7 +2915,7 @@ contexts:
         | ^__             # emphasis can't be closed at the start of the line
     - match: (?:\*)?(__\b)
       captures:
-        1: punctuation.definition.bold.end.markdown
+        1: punctuation.definition.bold.end.djot
       pop: 1
     # Consume the asterisk that has no corresponding asterisk before the closing bold
     # punctuation on the same line, as it won't be treated as italic by CommonMark
@@ -2923,8 +2923,8 @@ contexts:
     - include: bold-common
 
   bold-italic-asterisk:
-    - meta_scope: markup.bold.markdown
-    - meta_content_scope: markup.italic.markdown
+    - meta_scope: markup.bold.djot
+    - meta_content_scope: markup.italic.djot
     - match: |-
         (?x)
           [ \t]*\*{4,}    # if there are more than 3 its not applicable to be bold or italic
@@ -2932,45 +2932,45 @@ contexts:
         | ^\*(?!\*)       # emphasis can't be closed at the start of the line
     - match: (\*)(\*\*)
       captures:
-        1: markup.italic.markdown punctuation.definition.italic.end.markdown
-        2: punctuation.definition.bold.end.markdown
+        1: markup.italic.djot punctuation.definition.italic.end.djot
+        2: punctuation.definition.bold.end.djot
       pop: 1
     - match: \*\*
-      scope: markup.italic.markdown punctuation.definition.bold.end.markdown
+      scope: markup.italic.djot punctuation.definition.bold.end.djot
       set: italic-after-bold-italic-asterisk
     - match: \*
-      scope: markup.italic.markdown punctuation.definition.italic.end.markdown
+      scope: markup.italic.djot punctuation.definition.italic.end.djot
       set: bold-after-bold-italic-asterisk
     - include: emphasis-common
     - include: strikethrough
 
   bold-after-bold-italic-asterisk:
-    - meta_content_scope: markup.bold.markdown
+    - meta_content_scope: markup.bold.djot
     - match: |-
         (?x)
           [ \t]*\*{3,}    # if there are more than 3 its not applicable to be bold or italic
         | [ \t]+\*\*+     # whitespace followed by 1 is also not applicable (but whitespace followed by 2 could be bold punctuation)
         | ^\*\*           # emphasis can't be closed at the start of the line
     - match: \*\*
-      scope: markup.bold.markdown punctuation.definition.bold.end.markdown
+      scope: markup.bold.djot punctuation.definition.bold.end.djot
       pop: 1
     - include: bold-common
 
   italic-after-bold-italic-asterisk:
-    - meta_content_scope: markup.italic.markdown
+    - meta_content_scope: markup.italic.djot
     - match: |-
         (?x)
           [ \t]*\*{3,}    # if there are more than 3 its not applicable to be bold or italic
         | [ \t]+\*\*+     # whitespace followed by 1 is also not applicable (but whitespace followed by 2 could be bold punctuation)
         | ^\*\*           # emphasis can't be closed at the start of the line
     - match: \*
-      scope: markup.italic.markdown punctuation.definition.italic.end.markdown
+      scope: markup.italic.djot punctuation.definition.italic.end.djot
       pop: 1
     - include: italic-common
 
   bold-italic-underscore:
-    - meta_scope: markup.bold.markdown
-    - meta_content_scope: markup.italic.markdown
+    - meta_scope: markup.bold.djot
+    - meta_content_scope: markup.italic.djot
     - match: |-
         (?x)
           [ \t]*_{4,}     # if there are more than 3 its not applicable to be bold or italic
@@ -2978,39 +2978,39 @@ contexts:
         | ^_(?!_)         # emphasis can't be closed at the start of the line
     - match: (_)(__)\b
       captures:
-        1: markup.italic.markdown punctuation.definition.italic.end.markdown
-        2: punctuation.definition.bold.end.markdown
+        1: markup.italic.djot punctuation.definition.italic.end.djot
+        2: punctuation.definition.bold.end.djot
       pop: 1
     - match: _\b
-      scope: markup.italic.markdown punctuation.definition.italic.end.markdown
+      scope: markup.italic.djot punctuation.definition.italic.end.djot
       set: bold-after-bold-italic-underscore
     - match: __\b
-      scope: markup.italic.markdown punctuation.definition.bold.end.markdown
+      scope: markup.italic.djot punctuation.definition.bold.end.djot
       set: italic-after-bold-italic-underscore
     - include: emphasis-common
     - include: strikethrough
 
   bold-after-bold-italic-underscore:
-    - meta_content_scope: markup.bold.markdown
+    - meta_content_scope: markup.bold.djot
     - match: |-
         (?x)
           [ \t]*_{3,}     # if there are more than 3 its not applicable to be bold or italic
         | [ \t]+__+       # whitespace followed by 1 is also not applicable (but whitespace followed by 2 could be bold punctuation)
         | ^__             # emphasis can't be closed at the start of the line
     - match: __\b
-      scope: markup.bold.markdown punctuation.definition.bold.end.markdown
+      scope: markup.bold.djot punctuation.definition.bold.end.djot
       pop: 1
     - include: bold-common
 
   italic-after-bold-italic-underscore:
-    - meta_content_scope: markup.italic.markdown
+    - meta_content_scope: markup.italic.djot
     - match: |-
         (?x)
           [ \t]*_{3,}     # if there are more than 3 its not applicable to be bold or italic
         | [ \t]+__+       # whitespace followed by 1 is also not applicable (but whitespace followed by 2 could be bold punctuation)
         | ^__             # emphasis can't be closed at the start of the line
     - match: _\b
-      scope: markup.italic.markdown punctuation.definition.italic.end.markdown
+      scope: markup.italic.djot punctuation.definition.italic.end.djot
       pop: 1
     - include: italic-common
 
@@ -3021,35 +3021,35 @@ contexts:
 
   italic:
     - match: '{{italic_asterisk_begin}}'
-      scope: punctuation.definition.italic.begin.markdown
+      scope: punctuation.definition.italic.begin.djot
       push: italic-asterisk
     - match: \b_(?=\S)(?!_)
-      scope: punctuation.definition.italic.begin.markdown
+      scope: punctuation.definition.italic.begin.djot
       push: italic-underscore
     - match: '[*_]+'
 
   italic-asterisk:
-    - meta_scope: markup.italic.markdown
+    - meta_scope: markup.italic.djot
     - match: |-
         (?x)
           [ \t]*\*{4,}    # if there are more than 3 its not applicable to be bold or italic
         | [ \t]+\*(?!\*)  # whitespace followed by 1 is also not applicable (but whitespace followed by 2 could be bold punctuation)
         | ^\*(?!\*)       # emphasis can't be closed at the start of the line
     - match: \*(?!\*[^*])
-      scope: punctuation.definition.italic.end.markdown
+      scope: punctuation.definition.italic.end.djot
       pop: 1
     - match: \*+
     - include: italic-common
 
   italic-underscore:
-    - meta_scope: markup.italic.markdown
+    - meta_scope: markup.italic.djot
     - match: |-
         (?x)
           [ \t]*_{4,}     # if there are more than 3 its not applicable to be bold or italic
         | [ \t]+_(?!_)    # whitespace followed by 1 is also not applicable (but whitespace followed by 2 could be bold punctuation)
         | ^_(?!_)         # emphasis can't be closed at the start of the line
     - match: _\b
-      scope: punctuation.definition.italic.end.markdown
+      scope: punctuation.definition.italic.end.djot
       pop: 1
     - include: italic-common
 
@@ -3061,14 +3061,14 @@ contexts:
   strikethrough:
     # https://github.github.com/gfm/#strikethrough-extension-
     - match: ~~(?![~}>\s])  # 2x ~ but no ~> or ~~}
-      scope: punctuation.definition.strikethrough.begin.markdown
+      scope: punctuation.definition.strikethrough.begin.djot
       push: strikethrough-content
     - match: ~+(?![~}>\s])  # any number of ~ not looking like ~> or ~~}
 
   strikethrough-content:
-    - meta_scope: markup.strikethrough.markdown-gfm
+    - meta_scope: markup.strikethrough.djot
     - match: ~~(?:(?!~)|(?=~~}|~>))  # 2x ~ maybe followed by ~> or ~~}
-      scope: punctuation.definition.strikethrough.end.markdown
+      scope: punctuation.definition.strikethrough.end.djot
       pop: 1
     - match: ~+(?:(?!~)|(?=~~}|~>))  # any number of ~ maybe followed by ~> or ~~}
     - include: emphasis-common
@@ -3079,7 +3079,7 @@ contexts:
     - match: '{{setext_heading_escape}}'
       pop: 1
     - match: ^\s*$\n?
-      scope: invalid.illegal.non-terminated.bold-italic.markdown
+      scope: invalid.illegal.non-terminated.bold-italic.djot
       pop: 1
     - include: paragraph-end
     - include: hard-line-breaks
@@ -3092,21 +3092,21 @@ contexts:
 
   image-inline:
     - match: \!\[(?={{balance_square_brackets}}?\]\()
-      scope: punctuation.definition.image.begin.markdown
+      scope: punctuation.definition.image.begin.djot
       push:
         - image-inline-metadata
         - image-inline-text
 
   image-inline-text:
-    - meta_scope: meta.image.inline.description.markdown
+    - meta_scope: meta.image.inline.description.djot
     - match: \]
-      scope: punctuation.definition.image.end.markdown
+      scope: punctuation.definition.image.end.djot
       pop: 1
     - include: link-text
 
   image-inline-metadata:
     - match: \(
-      scope: punctuation.definition.metadata.begin.markdown
+      scope: punctuation.definition.metadata.begin.djot
       set:
         - image-inline-metadata-end
         - link-title
@@ -3114,91 +3114,91 @@ contexts:
     - include: immediately-pop
 
   image-inline-metadata-end:
-    - meta_scope: meta.image.inline.metadata.markdown
+    - meta_scope: meta.image.inline.metadata.djot
     - match: \)
-      scope: punctuation.definition.metadata.end.markdown
+      scope: punctuation.definition.metadata.end.djot
       set: image-inline-attr
     - include: else-pop
 
   image-inline-url:
     - match: <
-      scope: punctuation.definition.link.begin.markdown
+      scope: punctuation.definition.link.begin.djot
       set: image-inline-url-angled
     - match: (?=\S)
       set: image-inline-url-unquoted
 
   image-inline-url-angled:
-    - meta_content_scope: markup.underline.link.image.markdown
+    - meta_content_scope: markup.underline.link.image.djot
     - include: link-url-angled
 
   image-inline-url-unquoted:
-    - meta_scope: markup.underline.link.image.markdown
+    - meta_scope: markup.underline.link.image.djot
     - include: link-url-unquoted
 
   image-inline-attr:
     - match: \{(?=[^}]*\})
-      scope: punctuation.definition.attributes.begin.markdown
+      scope: punctuation.definition.attributes.begin.djot
       set: image-inline-attr-body
     - include: immediately-pop
 
   image-inline-attr-body:
-    - meta_scope: meta.image.inline.attributes.markdown
+    - meta_scope: meta.image.inline.attributes.djot
     - include: tag-attributes
 
   image-ref:
     - match: \!\[(?={{balance_square_brackets}}?\]\[{{reference_name}}\])
-      scope: punctuation.definition.image.begin.markdown
+      scope: punctuation.definition.image.begin.djot
       push:
         - image-ref-attr
         - image-ref-metadata
         - image-ref-text
 
   image-ref-text:
-    - meta_scope: meta.image.reference.description.markdown
+    - meta_scope: meta.image.reference.description.djot
     - match: \]
-      scope: punctuation.definition.image.end.markdown
+      scope: punctuation.definition.image.end.djot
       pop: 1
     - include: link-text
 
   image-ref-metadata:
     - match: (\[)({{reference_name}})(\])
-      scope: meta.image.reference.metadata.markdown
+      scope: meta.image.reference.metadata.djot
       captures:
-        1: punctuation.definition.metadata.begin.markdown
-        2: markup.underline.link.markdown
-        3: punctuation.definition.metadata.end.markdown
+        1: punctuation.definition.metadata.begin.djot
+        2: markup.underline.link.djot
+        3: punctuation.definition.metadata.end.djot
       pop: 1
     - include: immediately-pop
 
   image-ref-attr:
     - match: \{(?=[^}]*\})
-      scope: punctuation.definition.attributes.begin.markdown
+      scope: punctuation.definition.attributes.begin.djot
       set: image-ref-attr-body
     - include: immediately-pop
 
   image-ref-attr-body:
-    - meta_scope: meta.image.reference.markdown
+    - meta_scope: meta.image.reference.djot
     - include: tag-attributes
 
 ###[ INLINE: LINKS ]##########################################################
 
   link-inline:
     - match: \[(?={{balance_square_brackets}}?\]\()
-      scope: punctuation.definition.link.begin.markdown
+      scope: punctuation.definition.link.begin.djot
       push:
         - link-inline-metadata
         - link-inline-text
 
   link-inline-text:
-    - meta_scope: meta.link.inline.description.markdown
+    - meta_scope: meta.link.inline.description.djot
     - match: \]
-      scope: punctuation.definition.link.end.markdown
+      scope: punctuation.definition.link.end.djot
       pop: 1
     - include: link-text-allow-image
 
   link-inline-metadata:
     - match: \(
-      scope: punctuation.definition.metadata.begin.markdown
+      scope: punctuation.definition.metadata.begin.djot
       set:
         - link-inline-metadata-end
         - link-title
@@ -3206,126 +3206,126 @@ contexts:
     - include: immediately-pop
 
   link-inline-metadata-end:
-    - meta_scope: meta.link.inline.metadata.markdown
+    - meta_scope: meta.link.inline.metadata.djot
     - match: \)
-      scope: punctuation.definition.metadata.end.markdown
+      scope: punctuation.definition.metadata.end.djot
       set: link-inline-attr
     - include: else-pop
 
   link-inline-url:
     - match: <
-      scope: punctuation.definition.link.begin.markdown
+      scope: punctuation.definition.link.begin.djot
       set: link-inline-url-angled
     - match: (?=\S)
       set: link-inline-url-unquoted
 
   link-inline-url-angled:
-    - meta_content_scope: markup.underline.link.markdown
+    - meta_content_scope: markup.underline.link.djot
     - include: link-url-angled
 
   link-inline-url-unquoted:
-    - meta_scope: markup.underline.link.markdown
+    - meta_scope: markup.underline.link.djot
     - include: link-url-unquoted
 
   link-inline-attr:
     - match: \{(?=[^}]*\})
-      scope: punctuation.definition.attributes.begin.markdown
+      scope: punctuation.definition.attributes.begin.djot
       set: link-inline-attr-body
     - include: immediately-pop
 
   link-inline-attr-body:
-    - meta_scope: meta.link.inline.attributes.markdown
+    - meta_scope: meta.link.inline.attributes.djot
     - include: tag-attributes
 
   link-ref:
     - match: \[(?={{balance_square_brackets}}?\]\[{{reference_name}}\])
-      scope: punctuation.definition.link.begin.markdown
+      scope: punctuation.definition.link.begin.djot
       push:
         - link-ref-attr
         - link-ref-metadata
         - link-ref-link-text
     - match: \[(?={{balance_square_brackets}}?\])
-      scope: punctuation.definition.link.begin.markdown
+      scope: punctuation.definition.link.begin.djot
       push: link-ref-link-text
 
   link-ref-link-text:
-    - meta_scope: meta.link.reference.description.markdown
+    - meta_scope: meta.link.reference.description.djot
     - match: \]
-      scope: punctuation.definition.link.end.markdown
+      scope: punctuation.definition.link.end.djot
       pop: 1
     - include: link-text-allow-image
 
   link-ref-metadata:
     - match: (\[)({{reference_name}})(\])
-      scope: meta.link.reference.metadata.markdown
+      scope: meta.link.reference.metadata.djot
       captures:
-        1: punctuation.definition.metadata.begin.markdown
-        2: markup.underline.link.markdown
-        3: punctuation.definition.metadata.end.markdown
+        1: punctuation.definition.metadata.begin.djot
+        2: markup.underline.link.djot
+        3: punctuation.definition.metadata.end.djot
       pop: 1
     - include: immediately-pop
 
   link-ref-attr:
     - match: \{(?=[^}]*\})
-      scope: punctuation.definition.attributes.begin.markdown
+      scope: punctuation.definition.attributes.begin.djot
       set: link-ref-attr-body
     - include: immediately-pop
 
   link-ref-attr-body:
-    - meta_scope: meta.link.reference.attributes.markdown
+    - meta_scope: meta.link.reference.attributes.djot
     - include: tag-attributes
 
   link-ref-literal:
     - match: \[(?={{balance_square_brackets}}?\]\[\])
-      scope: punctuation.definition.link.begin.markdown
+      scope: punctuation.definition.link.begin.djot
       push:
         - link-ref-literal-attr
         - link-ref-literal-metadata
         - link-ref-literal-link-text
 
   link-ref-literal-link-text:
-    - meta_scope: meta.link.reference.literal.description.markdown
+    - meta_scope: meta.link.reference.literal.description.djot
     - match: \]
-      scope: punctuation.definition.link.end.markdown
+      scope: punctuation.definition.link.end.djot
       pop: 1
     - include: link-text-allow-image
 
   link-ref-literal-metadata:
     - match: (\[)(\])
-      scope: meta.link.reference.literal.metadata.markdown
+      scope: meta.link.reference.literal.metadata.djot
       captures:
-        1: punctuation.definition.metadata.begin.markdown
-        2: punctuation.definition.metadata.end.markdown
+        1: punctuation.definition.metadata.begin.djot
+        2: punctuation.definition.metadata.end.djot
       pop: 1
     - include: immediately-pop
 
   link-ref-literal-attr:
     - match: \{(?=[^}]*\})
-      scope: punctuation.definition.attributes.begin.markdown
+      scope: punctuation.definition.attributes.begin.djot
       set: link-ref-literal-attr-body
     - include: immediately-pop
 
   link-ref-literal-attr-body:
-    - meta_scope: meta.link.reference.literal.attributes.markdown
+    - meta_scope: meta.link.reference.literal.attributes.djot
     - include: tag-attributes
 
   link-ref-footnote:
     - match: (\[)({{footnote_name}})(\])
       captures:
-        0: meta.link.reference.footnote.markdown-extra
-        1: punctuation.definition.link.begin.markdown
-        2: meta.link.reference.literal.footnote-id.markdown
-        3: punctuation.definition.link.end.markdown
+        0: meta.link.reference.footnote.djot
+        1: punctuation.definition.link.begin.djot
+        2: meta.link.reference.literal.footnote-id.djot
+        3: punctuation.definition.link.end.djot
 
   link-ref-wiki:
     - match: \[\[(?={{balance_square_brackets}}?\]\])
-      scope: punctuation.definition.link.begin.markdown
+      scope: punctuation.definition.link.begin.djot
       push: link-ref-wiki-link-text
 
   link-ref-wiki-link-text:
-    - meta_scope: meta.link.reference.wiki.description.markdown
+    - meta_scope: meta.link.reference.wiki.description.djot
     - match: \]\]
-      scope: punctuation.definition.link.end.markdown
+      scope: punctuation.definition.link.end.djot
       pop: 1
     - include: link-text-allow-image
 
@@ -3356,46 +3356,46 @@ contexts:
 
   link-title-begin:
     - match: \'
-      scope: punctuation.definition.string.begin.markdown
+      scope: punctuation.definition.string.begin.djot
       set: link-title-single-quoted-content
     - match: \"
-      scope: punctuation.definition.string.begin.markdown
+      scope: punctuation.definition.string.begin.djot
       set: link-title-double-quoted-content
     - match: \(
-      scope: punctuation.definition.string.begin.markdown
+      scope: punctuation.definition.string.begin.djot
       set: link-title-other-quoted-content
 
   link-title-double-quoted-content:
-    - meta_scope: meta.string.title.markdown string.quoted.double.markdown
+    - meta_scope: meta.string.title.djot string.quoted.double.djot
     - match: \"
-      scope: punctuation.definition.string.end.markdown
+      scope: punctuation.definition.string.end.djot
       pop: 1
     - include: link-title-common
 
   link-title-single-quoted-content:
-    - meta_scope: meta.string.title.markdown string.quoted.single.markdown
+    - meta_scope: meta.string.title.djot string.quoted.single.djot
     - match: \'
-      scope: punctuation.definition.string.end.markdown
+      scope: punctuation.definition.string.end.djot
       pop: 1
     - include: link-title-common
 
   link-title-other-quoted-content:
-    - meta_scope: meta.string.title.markdown string.quoted.other.markdown
+    - meta_scope: meta.string.title.djot string.quoted.other.djot
     - match: \)
-      scope: punctuation.definition.string.end.markdown
+      scope: punctuation.definition.string.end.djot
       pop: 1
     - include: link-title-common
 
   link-title-common:
     - match: ^\s*$\n?
-      scope: invalid.illegal.non-terminated.link-title.markdown
+      scope: invalid.illegal.non-terminated.link-title.djot
       pop: 1
     - include: escapes
     - include: html-entities
 
   link-url-angled:
     - match: \>
-      scope: punctuation.definition.link.end.markdown
+      scope: punctuation.definition.link.end.djot
       pop: 1
     - include: link-url-common
 
@@ -3421,84 +3421,84 @@ contexts:
 
   link-url-escapes:
     - match: (%)\h{2}
-      scope: constant.character.escape.url.markdown
+      scope: constant.character.escape.url.djot
       captures:
-        1: punctuation.definition.escape.markdown
+        1: punctuation.definition.escape.djot
 
   link-url-path-separators:
     - match: '[/&?#]'
-      scope: punctuation.separator.path.markdown
+      scope: punctuation.separator.path.djot
 
   link-url-scheme-separators:
     - match: ':/{,2}'
-      scope: punctuation.separator.path.markdown
+      scope: punctuation.separator.path.djot
 
   link-url-scheme-separator:
     - match: ':/{,2}'
-      scope: punctuation.separator.path.markdown
+      scope: punctuation.separator.path.djot
       pop: 1
 
 ###[ INLINE: LINK/IMAGE/REFERENCE ATTRIBUTES ]################################
 
   tag-attributes:
     # https://kramdown.gettalong.org/syntax.html#span-ials
-    # https://michelf.ca/projects/php-markdown/extra/
+    # https://michelf.ca/projects/php-djot/extra/
     # https://pandoc.org/MANUAL.html#extension-link_attributes
     - match: \}
-      scope: punctuation.definition.attributes.end.markdown
+      scope: punctuation.definition.attributes.end.djot
       pop: 1
     - match: \,
-      scope: punctuation.separator.sequence.markdown
+      scope: punctuation.separator.sequence.djot
     - match: '{{tag_attribute_name_start}}'
       push: [tag-attr-meta, tag-attr-equals, tag-attr-name]
 
   tag-attr-name:
-    - meta_scope: entity.other.attribute-name.markdown
+    - meta_scope: entity.other.attribute-name.djot
     - match: '{{tag_attribute_name_break}}'
       pop: 1
     - match: '["''`<]'
-      scope: invalid.illegal.attribute-name.markdown
+      scope: invalid.illegal.attribute-name.djot
 
   tag-attr-meta:
     - meta_include_prototype: false
-    - meta_scope: meta.attribute-with-value.markdown
+    - meta_scope: meta.attribute-with-value.djot
     - include: immediately-pop
 
   tag-attr-equals:
     - match: =
-      scope: punctuation.separator.key-value.markdown
+      scope: punctuation.separator.key-value.djot
       set: tag-attr-value
     - include: else-pop
 
   tag-attr-value:
     - match: \"
-      scope: punctuation.definition.string.begin.markdown
+      scope: punctuation.definition.string.begin.djot
       set: tag-attr-value-double-quoted
     - match: \'
-      scope: punctuation.definition.string.begin.markdown
+      scope: punctuation.definition.string.begin.djot
       set: tag-attr-value-single-quoted
     - match: '{{tag_unquoted_attribute_start}}'
       set: tag-attr-value-unquoted
     - include: else-pop
 
   tag-attr-value-double-quoted:
-    - meta_scope: string.quoted.double.markdown
+    - meta_scope: string.quoted.double.djot
     - match: \"
-      scope: punctuation.definition.string.end.markdown
+      scope: punctuation.definition.string.end.djot
       pop: 1
 
   tag-attr-value-single-quoted:
-    - meta_scope: string.quoted.single.markdown
+    - meta_scope: string.quoted.single.djot
     - match: \'
-      scope: punctuation.definition.string.end.markdown
+      scope: punctuation.definition.string.end.djot
       pop: 1
 
   tag-attr-value-unquoted:
-    - meta_scope: string.unquoted.markdown
+    - meta_scope: string.unquoted.djot
     - match: '{{tag_unquoted_attribute_break}}'
       pop: 1
     - match: '["''`<]'
-      scope: invalid.illegal.attribute-value.markdown
+      scope: invalid.illegal.attribute-value.djot
 
 ###[ INLINE: AUTOLINKS ]######################################################
 
@@ -3516,23 +3516,23 @@ contexts:
         )
         (>)
       captures:
-        0: meta.link.email.markdown
-        1: punctuation.definition.link.begin.markdown
-        2: markup.underline.link.markdown
-        3: punctuation.separator.path.markdown
-        4: punctuation.separator.path.markdown
-        5: punctuation.definition.link.end.markdown
+        0: meta.link.email.djot
+        1: punctuation.definition.link.begin.djot
+        2: markup.underline.link.djot
+        3: punctuation.separator.path.djot
+        4: punctuation.separator.path.djot
+        5: punctuation.definition.link.end.djot
     # Github Flavoured Markdown
     - match: '[\w.+-]+(@)[\w-]+(?:\.(?:(?![._-][\W])[\w_-])+)+(?![_-])'
       captures:
-        0: meta.link.email.markdown markup.underline.link.markdown
-        1: punctuation.separator.path.markdown
+        0: meta.link.email.djot markup.underline.link.djot
+        1: punctuation.separator.path.djot
 
   autolink-inet:
     # CommonMark
     # https://spec.commonmark.org/0.30/#autolinks
     - match: <(?=[[:alpha:]][[:alnum:].+-]+:)
-      scope: punctuation.definition.link.begin.markdown
+      scope: punctuation.definition.link.begin.djot
       push:
         - autolink-inet-angled-content
         - link-url-scheme-separator
@@ -3541,14 +3541,14 @@ contexts:
     # https://github.github.com/gfm/#autolinks-extension-
     - match: (?:(?:https|http|ftp)(://)|www\.)[\w-]+
       captures:
-        1: punctuation.separator.path.markdown
+        1: punctuation.separator.path.djot
       push: autolink-inet-unquoted-content
 
   autolink-inet-angled-content:
-    - meta_scope: meta.link.inet.markdown
-    - meta_content_scope: markup.underline.link.markdown
+    - meta_scope: meta.link.inet.djot
+    - meta_content_scope: markup.underline.link.djot
     - match: \>
-      scope: punctuation.definition.link.end.markdown
+      scope: punctuation.definition.link.end.djot
       pop: 1
     # Spaces are not allowed in autolinks
     - match: (?=\s)
@@ -3556,7 +3556,7 @@ contexts:
     - include: autolink-inet-common
 
   autolink-inet-unquoted-content:
-    - meta_scope: meta.link.inet.markdown markup.underline.link.markdown-gfm
+    - meta_scope: meta.link.inet.djot markup.underline.link.djot
     # 1. When an autolink ends in ), we scan the entire autolink for the total
     #    number of parentheses. If there is a greater number of closing parentheses
     #    than opening ones, we don’t consider the last character part of the
@@ -3590,16 +3590,16 @@ contexts:
   escapes:
     # https://spec.commonmark.org/0.30/#backslash-escapes
     - match: '{{escapes}}'
-      scope: constant.character.escape.markdown
+      scope: constant.character.escape.djot
 
   hard-line-breaks:
     # https://spec.commonmark.org/0.30/#hard-line-breaks
     - match: '[ ]{2,}$'
-      scope: meta.hard-line-break.markdown punctuation.definition.hard-line-break.markdown
+      scope: meta.hard-line-break.djot punctuation.definition.hard-line-break.djot
     - match: (\\)\n
       captures:
-        0: meta.hard-line-break.markdown
-        1: constant.character.escape.markdown
+        0: meta.hard-line-break.djot
+        1: constant.character.escape.djot
 
 ###[ EXTENSIONS: CRITIC MARKUP ]##############################################
 
@@ -3614,77 +3614,77 @@ contexts:
 
   critics-additions:
     - match: \{\+\+
-      scope: punctuation.definition.critic.begin.markdown
+      scope: punctuation.definition.critic.begin.djot
       push: critics-addition-content
 
   critics-addition-content:
-    - meta_scope: markup.critic.addition.markdown
-    - meta_content_scope: markup.inserted.critic.markdown
+    - meta_scope: markup.critic.addition.djot
+    - meta_content_scope: markup.inserted.critic.djot
     - match: \+\+\}
-      scope: punctuation.definition.critic.end.markdown
+      scope: punctuation.definition.critic.end.djot
       pop: 1
     - include: critics-common
 
   critics-comments:
     - match: '{>>'
-      scope: punctuation.definition.critic.begin.markdown
+      scope: punctuation.definition.critic.begin.djot
       push: critics-comment-content
 
   critics-comment-content:
-    - meta_scope: markup.critic.comment.markdown
-    - meta_content_scope: comment.critic.markdown
+    - meta_scope: markup.critic.comment.djot
+    - meta_content_scope: comment.critic.djot
     - match: '<<}'
-      scope: punctuation.definition.critic.end.markdown
+      scope: punctuation.definition.critic.end.djot
       pop: 1
     - include: critics-common
 
   critics-deletions:
     - match: '{--'
-      scope: punctuation.definition.critic.begin.markdown
+      scope: punctuation.definition.critic.begin.djot
       push: critics-deletion-content
 
   critics-deletion-content:
-    - meta_scope: markup.critic.deletion.markdown
-    - meta_content_scope: markup.deleted.critic.markdown
+    - meta_scope: markup.critic.deletion.djot
+    - meta_content_scope: markup.deleted.critic.djot
     - match: '--}'
-      scope: punctuation.definition.critic.end.markdown
+      scope: punctuation.definition.critic.end.djot
       pop: 1
     - include: critics-common
 
   critics-highlights:
     - match: '{=='
-      scope: punctuation.definition.critic.begin.markdown
+      scope: punctuation.definition.critic.begin.djot
       push: critics-highlight-content
 
   critics-highlight-content:
-    - meta_scope: markup.critic.highlight.markdown
-    - meta_content_scope: markup.info.critic.markdown
+    - meta_scope: markup.critic.highlight.djot
+    - meta_content_scope: markup.info.critic.djot
     - match: '==}'
-      scope: punctuation.definition.critic.end.markdown
+      scope: punctuation.definition.critic.end.djot
       pop: 1
     - include: critics-common
 
   critics-substitutions:
     - match: '{~~'
-      scope: punctuation.definition.critic.begin.markdown
+      scope: punctuation.definition.critic.begin.djot
       push: critics-substitution-deleted
 
   critics-substitution-deleted:
-    - meta_scope: markup.critic.substitution.markdown
-    - meta_content_scope: markup.deleted.critic.markdown
+    - meta_scope: markup.critic.substitution.djot
+    - meta_content_scope: markup.deleted.critic.djot
     - match: (?=~>)
       set:
         - meta_include_prototype: false
         - match: '~>'
-          scope: punctuation.separator.critic.markdown
+          scope: punctuation.separator.critic.djot
           set: critics-substitution-inserted
     - include: critics-substitution-inserted
 
   critics-substitution-inserted:
-    - meta_scope: markup.critic.substitution.markdown
-    - meta_content_scope: markup.inserted.critic.markdown
+    - meta_scope: markup.critic.substitution.djot
+    - meta_content_scope: markup.inserted.critic.djot
     - match: '~~}'
-      scope: punctuation.definition.critic.end.markdown
+      scope: punctuation.definition.critic.end.djot
       pop: 1
     - include: critics-common
 
@@ -3711,7 +3711,7 @@ contexts:
     - meta_include_prototype: false
     - match: ^[ \t]*(\$\$)
       captures:
-        1: text.tex.latex.embedded.markdown
+        1: text.tex.latex.embedded.djot
            meta.environment.math.block.dollar.latex
            punctuation.definition.math.begin.latex
       set:
@@ -3722,13 +3722,13 @@ contexts:
 
   list-math-block-end:
     - meta_include_prototype: false
-    - meta_scope: markup.math.block.markdown
+    - meta_scope: markup.math.block.djot
     - meta_content_scope:
-        text.tex.latex.embedded.markdown
+        text.tex.latex.embedded.djot
         meta.environment.math.block.dollar.latex
     - match: (\$\$)\s*$\n?
       captures:
-        1: text.tex.latex.embedded.markdown
+        1: text.tex.latex.embedded.djot
            meta.environment.math.block.dollar.latex
            punctuation.definition.math.end.latex
       pop: 1
@@ -3748,8 +3748,8 @@ contexts:
   list-math-inline-block-end:
     - meta_include_prototype: false
     - meta_scope:
-        markup.math.block.markdown
-        text.tex.latex.embedded.markdown
+        markup.math.block.djot
+        text.tex.latex.embedded.djot
         meta.environment.math.block.dollar.latex
     - match: \$\$
       scope: punctuation.definition.math.end.latex
@@ -3777,7 +3777,7 @@ contexts:
     - meta_include_prototype: false
     - match: ^[ ]{,3}(\$\$)
       captures:
-        1: text.tex.latex.embedded.markdown
+        1: text.tex.latex.embedded.djot
            meta.environment.math.block.dollar.latex
            punctuation.definition.math.begin.latex
       set:
@@ -3788,13 +3788,13 @@ contexts:
 
   math-block-end:
     - meta_include_prototype: false
-    - meta_scope: markup.math.block.markdown
+    - meta_scope: markup.math.block.djot
     - meta_content_scope:
-        text.tex.latex.embedded.markdown
+        text.tex.latex.embedded.djot
         meta.environment.math.block.dollar.latex
     - match: (\$\$)\s*$\n?
       captures:
-        1: text.tex.latex.embedded.markdown
+        1: text.tex.latex.embedded.djot
            meta.environment.math.block.dollar.latex
            punctuation.definition.math.end.latex
       pop: 1
@@ -3814,8 +3814,8 @@ contexts:
   math-inline-blocks-end:
     - meta_include_prototype: false
     - meta_scope:
-        markup.math.block.markdown
-        text.tex.latex.embedded.markdown
+        markup.math.block.djot
+        text.tex.latex.embedded.djot
         meta.environment.math.block.dollar.latex
     - match: \$\$
       scope: punctuation.definition.math.end.latex
@@ -3842,19 +3842,19 @@ contexts:
         # terminated by non-whitespace, followed by dollar and non-word characther
         (?= (?: \\\\ | \\\$ | (?!</?[A-Za-z]+[ \t]*/?>)[^\$] )*? \S\$\W )
       scope:
-        markup.math.inline.markdown
-        text.tex.latex.embedded.markdown
+        markup.math.inline.djot
+        text.tex.latex.embedded.djot
         meta.environment.math.block.dollar.latex
         punctuation.definition.math.begin.latex
       embed: math-content
       embed_scope:
-        markup.math.inline.markdown
-        text.tex.latex.embedded.markdown
+        markup.math.inline.djot
+        text.tex.latex.embedded.djot
         meta.environment.math.block.dollar.latex
       escape: '{{no_escape_behind}}\$'
       escape_captures:
-        0: markup.math.inline.markdown
-           text.tex.latex.embedded.markdown
+        0: markup.math.inline.djot
+           text.tex.latex.embedded.djot
            meta.environment.math.block.dollar.latex
            punctuation.definition.math.end.latex
 
@@ -3875,7 +3875,7 @@ contexts:
   expect-eol:
     - include: eol-pop
     - match: \S.+
-      scope: invalid.illegal.expected-eol.markdown
+      scope: invalid.illegal.expected-eol.djot
 
   immediately-pop:
     - match: ''
