@@ -9,4 +9,5 @@ Files: syntax/Djot.sublime-syntax
 Copyright: 2012 Brett Terpstra
            2023 Shun Sakai
 License: MIT
-Comment: Based on Markdown syntax highlighting of MarkdownEditing version 3.1.10 (https://github.com/SublimeText-Markdown/MarkdownEditing/blob/3.1.10/syntaxes/Markdown.sublime-syntax)
+Comment: Based on `Markdown.sublime-syntax` of MarkdownEditing version 3.1.10
+         (https://github.com/SublimeText-Markdown/MarkdownEditing)
