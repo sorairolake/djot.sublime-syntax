@@ -1,3 +1,10 @@
+#
+# SPDX-License-Identifier: MIT
+#
+# Copyright (C) 2012 Brett Terpstra
+# Copyright (C) 2023 Shun Sakai
+#
+
 %YAML 1.2
 ---
 # This definition aims to meet CommonMark specifications
