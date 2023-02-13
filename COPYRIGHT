@@ -10,4 +10,6 @@ Copyright: 2012 Brett Terpstra
            2023 Shun Sakai
 License: MIT
 Comment: Based on `Markdown.sublime-syntax` of MarkdownEditing version 3.1.10
-         (https://github.com/SublimeText-Markdown/MarkdownEditing)
+         for Sublime Text 3.
+         See https://github.com/SublimeText-Markdown/MarkdownEditing for more
+         details.
